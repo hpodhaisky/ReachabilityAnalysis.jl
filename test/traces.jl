@@ -1,6 +1,4 @@
-using DifferentialEquations
-
-@testset "DifferentialEquations solve API using an initial-value problem"
+@testset "DifferentialEquations solve API using an initial-value problem" begin
     prob = @ivp(x' = 1.0x, x(0) ∈ [1/2])
 
     sol = DifferentialEquations.solve(prob, tspan=(0.0, 1.0))

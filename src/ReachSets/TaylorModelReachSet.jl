@@ -198,7 +198,14 @@ LazySets.box_approximation(R::TaylorModelReachSet) = _overapproximate(R, Hyperre
 # e.g. if the partition is uniform for each dimension, the number of returned sets
 # is nsdiv^D * ntdiv
 function overapproximate(R::TaylorModelReachSet{N}, ::Type{<:Hyperrectangle};
-                         partition=nothing, nsdiv=1, ntdiv=1) where {N}
+                         partition=nothing, nsdiv=nothing, ntdiv=1) where {N}
+
+    if !isnothing(partition) && !isnothing(nsdiv)
+        throw(ArgumentError("either partition or nsdiv should be specified, not both"))
+    end
+    if isnothing(partition) && isnothing(nsdiv)
+        nsdiv = 1
+    end
 
     # no splitting
     if isnothing(partition) && nsdiv == 1 && ntdiv == 1
